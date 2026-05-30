@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- La página se refresca sola cada segundo para ver el progreso en vivo -->
+  <meta http-equiv="refresh" content="1">
+  <title>Cola de tareas (Workers) ⚙️</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main>
+    <h1>⚙️ Cola de tareas</h1>
+    <p class="sub">{{.Workers}} trabajadores procesan la cola. (La página se refresca sola.)</p>
+
+    <form class="barra" method="post" action="/submit">
+      <input type="text" name="name" placeholder="Nombre de la tarea (ej. Enviar correo)" autocomplete="off">
+      <button type="submit">Enviar tarea</button>
+    </form>
+
+    <ul class="lista">
+      {{range .Jobs}}
+      <li>
+        <span class="id">#{{.ID}}</span>
+        <span class="name">{{.Name}}</span>
+        <span class="badge {{.Status}}">
+          {{.Status}}{{if gt .Worker 0}} · worker {{.Worker}}{{end}}
+        </span>
+      </li>
+      {{else}}
+      <li class="vacio">No hay tareas. ¡Envía una arriba!</li>
+      {{end}}
+    </ul>
+  </main>
+</body>
+</html>
